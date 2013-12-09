@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SiQuoia Quest - Start Quiz</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="/css/modern-business.css" rel="stylesheet" />
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/css/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Index">SiQuoia Quest</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/play">Play A Quiz</a>
+                    </li>
+                    <li>
+                        <a href="/browse">Quiz Packets</a>
+                    </li>
+                    <li>
+                        <a href="/profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{{ userLogin }}">{{ userLoginText }}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Hi{{ userName }},
+                    <small>Quiz In Progress</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li id="Category">
+                        <strong>Category:</strong>
+                        <span data-bind="text: category">General</span>
+                    </li>
+                    <li id="CorrectAnswers">
+                        <strong>Correct Answers:</strong>
+                        <span data-bind="text: correctanswers">0</span>
+                    </li>
+                    <li id="Rating">
+                        <strong>Rating:</strong>
+                        <span data-bind="text: rating">Difficult</span>
+                    </li>
+                    <li id="Time" style="float:right">
+                        <strong>Time:</strong>
+                        <span data-bind="text: time">00:00:00</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row" id="wait">
+            <div class="col-lg-12">
+                <h3>Please Wait....</h3>
+            </div>
+        </div>
+
+        <div class="row" id="quizSession" style="display:none">
+            <div class="col-lg-12">
+                <h3>Your Quiz Session Is Complete</h3>
+            </div>
+        </div>
+
+        <div class="row" id="questionBox" style="display:none">
+            <div class="col-lg-8" style="padding-left:40px">
+                <h3 id="question" class="question">
+                    <strong data-bind="text: questionNumber">1.</strong>
+                    <span data-bind="text: questionText">Some Question</span>
+                </h3>
+                <div class="options">
+                    <br/>
+                    <div>
+                        <input type="radio" name="answers" value="a" onclick="checked()" data-bind="checked: selectAnswer">
+                        <strong>A.</strong>
+                        <span data-bind="text: optA"></span>
+                    </div>
+                    <br/>
+                    <div>
+                        <input type="radio" name="answers" value="b" onclick="checked()" data-bind="checked: selectAnswer">
+                        <strong>B.</strong>
+                        <span data-bind="text: optB"></span>
+                    </div>
+                    <br/>
+                    <div>
+                        <input type="radio" name="answers" value="c" onclick="checked()" data-bind="checked: selectAnswer">
+                        <strong>C.</strong>
+                        <span data-bind="text: optC"></span>
+                    </div>
+                    <br/>
+                    <div>
+                        <input type="radio" name="answers" value="d" onclick="checked()" data-bind="checked: selectAnswer">
+                        <strong>D.</strong>
+                        <span data-bind="text: optD"></span>
+                    </div>
+                </div>
+                <br/>
+                <div class="buttons">
+                    <input id="submit" type="button" value="Submit" onclick="submitAnswer()" style="display:none" />
+                    <input id="next" type="button" value="Next" onclick="nextQuestion()" style="display:none" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SiQuoia 2013</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- JavaScript -->
+    <script src="/js/jquery-1.10.2.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/modern-business.js"></script>
+    <script src="/js/jquery-ui-1.10.3.min.js"></script>
+    <script src="/js/knockout-3.0.0.js"></script>
+    <script src="/js/timer.js"></script>
+    <script type="text/javascript">
+        var time = ko.observable('');
+        var rating = ko.observable('');
+        var questionText = ko.observable('');
+        var questionNumber = ko.observable('');
+        var optA = ko.observable('');
+        var optB = ko.observable('');
+        var optC = ko.observable('');
+        var optD = ko.observable('');
+        var category = ko.observable('');
+        var correctanswers = ko.observable(0);
+        var selectAnswer = ko.observable('');
+        var lastQuestion = false;
+
+        var submitAnswer = function() {
+            $('#submit').hide();
+            $('radio').attr('disabled', true);
+            $.post("/answer", {
+                answer: selectAnswer()
+            })
+                .done(function(data) {
+                    $('#question').addClass(data.answer);
+                    correctanswers(data.correctanswers);
+                    if (!lastQuestion) {
+                        $('#next').show();
+                    } else {
+                        $('#quizSession').show();
+                    }
+                });
+        }
+
+        var checked = function() {
+            $('#submit').show();
+        }
+
+        var timeRemaining = 30;
+
+        var timer = $.timer(function() {
+            timeRemaining = timeRemaining - 1;
+            time(timeRemaining);
+            if (timeRemaining == 0) {
+                timer.stop();
+                submitAnswer();
+            }
+        });
+
+        var nextQuestion = function() {
+            $('#question').removeClass('unanswered');
+            $('#question').removeClass('correct');
+            $('#question').removeClass('incorrect');
+            $('#next').hide();
+            selectAnswer('');
+            $.post("/next")
+                .done(function(data) {
+                    lastQuestion = data.lastQuestion;
+                    questionText(data.questionText);
+                    questionNumber(data.questionNumber);
+                    correctanswers(data.correctanswers);
+                    optA(data.optA);
+                    optB(data.optB);
+                    optC(data.optC);
+                    optD(data.optD);
+                    category(data.category);
+                    rating(data.rating);
+                    $('radio').attr('disabled', false);
+                    $('#questionBox').show();
+                    $('#wait').hide();
+                    timer.set({
+                        time: 1000,
+                        autostart: true
+                    });
+
+                });
+        }
+
+        $(document).ready(function() {
+            $("input[type=button]").button();
+            ko.applyBindings(this);
+            nextQuestion();
+        });
+    </script>
+</body>
+
+</html>

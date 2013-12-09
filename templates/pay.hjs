@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SiQuoia Quest - Payment</title>
+
+            <!-- Bootstrap core CSS -->
+            <link href="/css/bootstrap.css" rel="stylesheet" />
+
+            <!-- Add custom CSS here -->
+            <link href="/css/modern-business.css" rel="stylesheet" />
+            <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+            <link href="/css/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Index">SiQuoia Quest</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/play">Play A Quiz</a>
+                    </li>
+                    <li>
+                        <a href="/browse">Quiz Packets</a>
+                    </li>
+                    <li>
+                        <a href="/profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{{ userLogin }}">{{ userLoginText }}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Hi{{ userName }}
+                    <small>Buy Here</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        {{ packetName }}
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 portfolio-item">
+                    <h2>Pay By Credit Card</h2>
+                    <form name="creditcard" id="creditcard" method="post" action="/pay">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:right">
+                                        <strong>Card Number:</strong>
+                                    </td>
+                                    <td colspan="2">
+                                        <input type="text" style="width:100%" name="ccnumber" id="ccnumber" placeholder="xxxx-xxxx-xxxx-xxxx" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">
+                                        <strong>Expiry:</strong>
+                                    </td>
+                                    <td>Month:
+                                        <input type="number" value="1" max="12" min="1" style="width:50px" name="cmonth" id="cmonth" placeholder="month" maxlength="2" />
+                                    </td>
+                                    <td>Year:
+                                        <input type="number" value="2015" min="2013" max="2023" style="width:80px" name="cmonth" id="cmonth" placeholder="year" maxlength="4" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">
+                                        <strong>Name:</strong>
+                                    </td>
+                                    <td colspan="2">
+                                        <input type="text" style="width:100%" name="cname" id="cname" placeholder="name" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">
+                                        <strong>CVV:</strong>
+                                    </td>
+                                    <td colspan="2">
+                                        <input type="text" style="width:100%" name="ccvv" id="ccvv" placeholder="CVV" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h5 style="color:red">{{ errorText }}</h5>
+                                        <input type="hidden" name="packetid" value="{{ packetid }}" />
+                                        <input type="hidden" name="mode" value="cc" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <input type="submit" value="Pay" />
+                                        <a href="/browse" class="button">Cancel</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="col-md-4 portfolio-item">
+                    <h2>Redeem Reward Points</h2>
+                    <form name="points" id="points" method="post" action="/pay">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:right">
+                                        <strong>Required Points:</strong>
+                                    </td>
+                                    <td colspan="2">
+                                        20
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">
+                                        <strong>Point Balance:</strong>
+                                    </td>
+                                    <td colspan="2">
+                                        {{ pointsBalance }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h5 style="color:red">{{ pointsErrorText }}</h5>
+                                        <input type="hidden" name="packetid" value="{{ packetid }}" />
+                                        <input type="hidden" name="mode" value="points" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <input id="redeem" type="submit" value="Redeem" />
+                                        <a href="/browse" class="button">Cancel</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+        <div class="container">
+
+            <hr>
+
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright &copy; SiQuoia 2013</p>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.container -->
+
+        <!-- JavaScript -->
+        <script src="/js/jquery-1.10.2.js"></script>
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/modern-business.js"></script>
+        <script src="/js/jquery-ui-1.10.3.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                    $("input[type=submit]").button();
+                    $(".button").button();
+
+                    var pointBalance = {{ pointsBalance }};
+
+                        if (pointBalance < 20) {
+                            $('#redeem').hide();
+                        }
+                    });
+        </script>
+</body>
+
+</html>

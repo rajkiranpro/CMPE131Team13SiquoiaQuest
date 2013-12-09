@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SiQuoia Quest - Profile</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="/css/modern-business.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Index">SiQuoia Quest</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/play">Play A Quiz</a>
+                    </li>
+                    <li>
+                        <a href="/browse">Quiz Packets</a>
+                    </li>
+                    <li>
+                        <a href="/profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{{ userLogin }}">{{ userLoginText }}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Hi{{ userName }},
+                    <small>Your Profile</small>
+                </h1>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-lg-4">
+                <ol class="breadcrumb">
+                    <li>
+                        <strong>Games Played: </strong>{{ gamesplayed }}
+                    </li>
+                </ol>
+                <ol class="breadcrumb">
+                    <li>
+                        <strong>Correct Answers: </strong>{{ correctanswers }}
+                    </li>
+                </ol>
+                <ol class="breadcrumb">
+                    <li>
+                        <strong>Points Balance: </strong>{{ points }}
+                    </li>
+                </ol>
+                <ol class="breadcrumb">
+                    <li>
+                        <strong>Owned Packets: </strong>{{ packets }}
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SiQuoia 2013</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- JavaScript -->
+    <script src="/js/jquery-1.10.2.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/modern-business.js"></script>
+    <script src="/js/jquery-ui-1.10.3.min.js"></script>
+</body>
+
+</html>

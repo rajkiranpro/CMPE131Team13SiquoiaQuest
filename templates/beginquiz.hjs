@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SiQuoia Quest - Start Quiz</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="/css/modern-business.css" rel="stylesheet"/>
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/css/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Index">SiQuoia Quest</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/play">Play A Quiz</a>
+                    </li>
+                    <li>
+                        <a href="/browse">Quiz Packets</a>
+                    </li>
+                    <li>
+                        <a href="/profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{{ userLogin }}">{{ userLoginText }}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Hi{{ userName }},
+                    <small>Your quiz is about to begin!</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        Start Quiz
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row" id="oldQuiz">
+            <div class="col-lg-12">
+                <p>You have a quiz session that is in progress.</p>
+                <p>Do note that if you decide to abort the session, the packet will be marked played and you will not be able to get any reward points from that.</p>
+                <form id="oldQuizForm" method="post" action="/play">
+                    <input type="hidden" id="oldsessionid" name="oldsessionid" value="{{ oldsessionid }}" />
+                    <input type="hidden" id="packetid" name="packetid" value="{{ packetid }}" />
+                    <input type="hidden" id="abort" name="abort" value="no" />
+                    <input type="hidden" id="mode" name="mode" value="old" />
+                    <input type="submit" value="Resume Previous Session" />
+                    <input type="submit" value="Abort Previous Session"  onclick="doAbort();" />
+                </form>
+            </div>
+        </div>
+
+        <div class="row" id="newQuiz">
+            <div class="col-lg-12">
+                <p>Do not press Back button when the quiz is in progress. Otherwise you might lose points for the question. You will have 30 seconds to answer each question.</p>
+                <form id="newQuizForm" method="post" action="/play">
+                    <input type="hidden" id="sessionid" name="sessionid" value="{{ quizsession }}" />
+                    <input type="hidden" id="mode" name="mode" value="new" />
+                    <input type="submit" value="Start Quiz"/>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SiQuoia 2013</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- JavaScript -->
+    <script src="/js/jquery-1.10.2.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/modern-business.js"></script>
+    <script src="/js/jquery-ui-1.10.3.min.js"></script>
+    <script type="text/javascript">
+        var mode = "{{ mode }}";
+        $(document).ready(function() {
+            if(mode == 'oldSession'){
+                $('#newQuiz').remove();
+            }else{
+                $('#oldQuiz').remove();
+            }
+            $("input[type=submit]").button();
+        });
+        
+        function doAbort() {
+            $('#abort').val('yes');
+            return true; 
+        }
+    </script>
+</body>
+
+</html>

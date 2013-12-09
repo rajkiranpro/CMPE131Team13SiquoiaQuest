@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SiQuoia Quest - Sign In / Register</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="css/modern-business.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/smoothness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/index">SiQuoia Quest</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/play">Play A Quiz</a></li>
+            <li><a href="/browse">Quiz Packets</a></li>
+            <li><a href="/profile">Profile</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+    <div class="container">
+     <div class="row">
+
+        <div class="col-md-4 portfolio-item">
+          <h2>Sign In</h2>
+          <form name="login" id="login" method="post" action="/login">
+              <h4>Username:</h4>
+              <input type="text" name="loginusername" id="loginusername" placeholder="username" value = "{{loginusername}}" />
+              <h4>Password:</h4>
+              <input type="password" placeholder="password" name="loginpassword" id="loginpassword" value = "{{loginpassword}}" />
+              <h5 style="color:red">{{ errorText }}</h5>
+              <input type="submit" value="Log In"/>
+          </form>
+        </div>
+
+        <div class="col-md-4 portfolio-item">
+          <h2>Register</h2>
+          <form name="register" id="register" method="post" action="/register">
+              <h4>Name:</h4>
+              <input type="text" name="registername" id="registername" placeholder="name" value="{{registername}}" />
+              <h4>Email:</h4>
+              <input type="text" name="registeremail" id="registeremail" placeholder="email" value="{{registeremail}}" />
+              <h4>Username:</h4>
+              <input type="text" name="registerusername" id="registerusername" placeholder="username" value="{{registerusername}}" />
+              <h4>Password:</h4>
+              <input type="password" placeholder="password" name="registerpassword" id="registerpassword" value="{{registerpassword}}" />
+              <h5 style="color:red">{{ registerErrorText }}</h5>
+              <input type="submit" value="Register"/>
+          </form>
+        </div>
+
+      </div>
+
+    </div><!-- /.container -->
+
+    <div class="container">
+
+      <hr>
+
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Copyright &copy; SiQuoia 2013</p>
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- /.container -->
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/modern-business.js"></script>
+    <script src="js/jquery-ui-1.10.3.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+    $( "input[type=submit]" )
+      .button();
+  });
+    </script>
+
+  </body>
+</html>
